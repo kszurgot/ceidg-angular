@@ -1,0 +1,63 @@
+<div class="center-screen">
+  <form
+    (ngSubmit)="f.form.valid && login()"
+    #f="ngForm"
+    novalidate
+    class="form-signin text-center"
+  >
+    <img class="mb-4" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Logowanie</h1>
+
+    <label for="username" class="sr-only">Adres email</label>
+    <input
+      [(ngModel)]="form.username"
+      #username="ngModel"
+      name="username"
+      type="email"
+      placeholder="email"
+      class="form-control"
+      email
+      required
+      autofocus
+    >
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="f.submitted && username.invalid"
+    >
+      <div *ngIf="username.errors.required">Email jest wymagany</div>
+      <div *ngIf="username.errors.email">Nieprawidłowy format adresu email</div>
+    </div>
+
+    <label for="password" class="sr-only">Hasło</label>
+    <input
+      [(ngModel)]="form.password"
+      minlength="6"
+      #password="ngModel"
+      name="password"
+      type="password"
+      placeholder="hasło"
+      class="form-control mt-3"
+      required
+    >
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="f.submitted && password.invalid"
+    >
+      <div *ngIf="password.errors.required">Hasło jest wymagane</div>
+      <div *ngIf="password.errors.minlength">Hasło musi składać się z przynajmniej 6 znaków</div>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Zaloguj się</button>
+    <div class="form-group mt-4">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="f.submitted && isLoginFailed"
+      >
+        Błąd logowania: {{ errorMessage }}
+      </div>
+    </div>
+  </form>
+</div>
