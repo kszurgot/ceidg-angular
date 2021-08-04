@@ -1,0 +1,239 @@
+<div class="col px-100">
+
+  <app-loading *ngIf="loading"></app-loading>
+
+  <app-error-modal [error]="error" (closeModal)="reset()"></app-error-modal>
+
+  <form *ngIf="!loading && !submitted" #companiesForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputNip">NIP</label>
+        <input
+          type="text" class="form-control"
+          id="inputNip" name="nip" minlength="13" maxlength="13" appNipValidator
+          [(ngModel)]="model.nip" (ngModelChange)="nip(model.nip)"  #inputNipControl="ngModel"
+        >
+        <div
+          *ngIf="(inputNipControl.errors?.minlength || inputNipControl.errors?.maxlength) && inputNipControl.invalid && inputNipControl.touched"
+          class="alert alert-danger"
+        >
+          NIP musi mieć 10 znaków
+        </div>
+        <div
+          *ngIf="inputNipControl.errors?.nip && inputNipControl.invalid"
+          class="alert alert-danger"
+        >
+          Nieprawidłowy numer NIP
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputRegon">REGON</label>
+        <input
+          type="text" class="form-control"
+          id="inputRegon" name="regon" minlength="9" maxlength="14" appRegonValidator
+          [(ngModel)]="model.regon" (ngModelChange)="regon(model.regon)"  #inputRegonControl="ngModel"
+        >
+        <div
+          *ngIf="(inputRegonControl.errors?.wrongLength) && inputRegonControl.touched"
+          class="alert alert-danger"
+        >
+          REGON musi mieć 9 lub 14 znaków
+        </div>
+        <div
+          *ngIf="inputRegonControl.errors?.regon && inputRegonControl.invalid"
+          class="alert alert-danger"
+        >
+          Nieprawidłowy numer REGON
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCompanyName">Nazwa firmy</label>
+        <input
+          type="text" class="form-control"
+          id="inputCompanyName" name="companyName"
+          [(ngModel)]="model.companyName"
+        >
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputPKDCode">Kod PKD</label>
+        <input
+          type="text" class="form-control"
+          id="inputPKDCode" name="PKDCode" minlength="7" maxlength="7"
+          [(ngModel)]="model.PKDCode" (ngModelChange)="PKDCode(model.PKDCode)"  #inputPKDCodeControl="ngModel"
+        >
+        <div
+          *ngIf="(inputPKDCodeControl.errors?.minlength) && inputPKDCodeControl.touched"
+          class="alert alert-danger"
+        >
+          Kod PKD musi składać się z 7 znaków
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputStatus">Status</label>
+        <select class="form-control" id="inputStatus" name="status" [(ngModel)]="model.status">
+          <option value="" selected>-</option>
+          <option value="AKTYWNY">Aktywny</option>
+          <option value="WYKRESLONY">Wykreślony</option>
+          <option value="ZAWIESZONY">Zawieszony</option>
+          <option value="OCZEKUJE_NA_ROZPOCZECIE_DZIALANOSCI">Oczekuje na rozpoczęcie działalności</option>
+          <option value="WYLACZNIE_W_FORMIE_SPOLKI">Wyłącznie w formie spółki</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputBusinessOwnerFirstName">Imię</label>
+        <input 
+          type="text" class="form-control"
+          id="inputBusinessOwnerFirstName" name="businessOwnerFirstName"
+          [(ngModel)]="model.businessOwnerFirstName"
+        >
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputBusinessOwnerLastName">Nazwisko</label>
+        <input
+          type="text" class="form-control"
+          id="inputBusinessOwnerLastName" name="businessOwnerLastName"
+          [(ngModel)]="model.businessOwnerLastName"
+        >
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputStreet">Ulica</label>
+        <input 
+          type="text" class="form-control"
+          id="inputStreet" name="street"
+          [(ngModel)]="model.street"
+        >
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputHouseNumber">Budynek</label>
+        <input
+          type="text" class="form-control"
+          id="inputHouseNumber" name="houseNumber"
+          [(ngModel)]="model.houseNumber"
+        >
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputApartmentNumber">Lokal</label>
+        <input
+          type="text" class="form-control"
+          id="inputApartmentNumber" name="apartmentNumber"
+          [(ngModel)]="model.apartmentNumber"
+        >
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">Miasto</label>
+        <input
+          type="text" class="form-control"
+          id="inputCity" name="city"
+          [(ngModel)]="model.city"
+        >
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPostcode">Kod pocztowy</label>
+        <input
+          type="text" class="form-control"
+          id="inputPostcode" name="postcode" minlength="6" maxlength="6"
+          [(ngModel)]="model.postcode" (ngModelChange)="postcode(model.postcode)"  #inputPostcodeControl="ngModel"
+        >
+        <div
+            *ngIf="(inputPostcodeControl.errors?.minlength) && inputPostcodeControl.touched"
+          class="alert alert-danger"
+        >
+          Kod pocztowy musi składać się z 6 znaków
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputVoivodeship">Województwo</label>
+        <select class="form-control" id="inputVoivodeship" name="voivodeship" [(ngModel)]="model.voivodeship">
+          <option value="" selected>-</option>
+          <option value="dolnośląskie">dolnośląskie</option>
+          <option value="kujawsko-pomorskie">kujawsko-pomorskie</option>
+          <option value="lubelskie">lubelskie</option>
+          <option value="lubuskie">lubuskie</option>
+          <option value="łódzkie">łódzkie</option>
+          <option value="małopolskie">małopolskie</option>
+          <option value="mazowieckie">mazowieckie</option>
+          <option value="opolskie">opolskie</option>
+          <option value="podkarpackie">podkarpackie</option>
+          <option value="podlaskie">podlaskie</option>
+          <option value="pomorskie">pomorskie</option>
+          <option value="śląskie">śląskie</option>
+          <option value="świętokrzyskie">świętokrzyskie</option>
+          <option value="warmińsko-mazurskie">warmińsko-mazurskie</option>
+          <option value="wielkopolskie">wielkopolskie</option>
+          <option value="zachodniopomorskie">zachodniopomorskie</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputDistrict">Powiat</label>
+        <input
+          type="text" class="form-control"
+          id="inputDistrict" name="district"
+          [(ngModel)]="model.district"
+        >
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputCommunity">Gmina</label>
+        <input
+          type="text" class="form-control"
+          id="inputCommunity" name="community"
+          [(ngModel)]="model.community"
+        >
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputStartDateFrom">Data rozpoczęcia działalności - zakres dolny</label>
+        <input
+          type="date" class="form-control"
+          id="inputStartDateFrom" name="startDateFrom"
+          [(ngModel)]="model.startDateFrom"
+        >
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputStartDateTo">Data rozpoczęcia działalności - zakres górny</label>
+        <input
+          type="date" class="form-control"
+          id="inputStartDateTo" name="startDateTo"
+          [(ngModel)]="model.startDateTo"
+        >
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputUpdateDateFrom">Data aktualizacji wpisu - zakres dolny</label>
+        <input
+          type="date" class="form-control"
+          id="inputUpdateDateFrom" name="updateDateFrom"
+          [(ngModel)]="model.updateDateFrom"
+        >
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputUpdateDateTo">Data aktualizacji wpisu - zakres górny</label>
+        <input
+          type="date" class="form-control"
+          id="inputUpdateDateTo" name="updateDateTo"
+          [(ngModel)]="model.updateDateTo"
+        >
+      </div>
+    </div>
+    <button type="submit" [disabled]="!companiesForm.form.valid" class="btn btn-primary">Wyszukaj</button>
+  </form>
+
+</div>
+

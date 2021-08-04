@@ -1,0 +1,15 @@
+<div id="errorModal" [ngStyle]="{display: displayErrorModal()}" class="modal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog-centered modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Error</h5>
+          <button (click)="close()" id="closeError" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Błąd połączenia z serwerami CEIDG</p>
+        </div>
+      </div>
+  </div>
+</div>

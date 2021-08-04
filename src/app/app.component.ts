@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  private roles: string[];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
