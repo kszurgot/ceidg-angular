@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { CompaniesQuery } from '../../models/companiesQuery';
 import Utils from '../../utils'
 import { HttpService } from 'src/app/services/http.service';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -11,11 +12,12 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class CeidgFormComponent {
 
-  companies: Array<CompaniesQuery>;
+  response: Object;
   model: CompaniesQuery = {}; // New
   submitted: boolean = false;
   loading: boolean = false;
   error: boolean = false;
+  faSearch = faSearch;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,private httpService: HttpService) {}
 
@@ -27,8 +29,7 @@ export class CeidgFormComponent {
 
     this.httpService.getCompanies(this.model).subscribe(
       data => {
-        console.log(JSON.parse(data));
-        this.companies = JSON.parse(data);
+        this.response = data;
       },
       err => {
         this.error = true;
@@ -39,9 +40,10 @@ export class CeidgFormComponent {
     );
   }
 
-  log(value: any) {
-    console.log(value);
-  }
+  // TODO: Remove this when we're done
+  // log(value: any) {
+  //   console.log(value);
+  // }
 
   nip(nip: string): void {
     this.changeDetectorRef.detectChanges();
@@ -84,7 +86,7 @@ export class CeidgFormComponent {
   postcode(postcode: string): void {
     this.changeDetectorRef.detectChanges();
 
-    postcode = postcode.replace(/[^0-9]/g, "").substring(0, 6);
+    postcode = postcode.replace(/[^0-9]/g, "").substring(0, 5);
     this.model.postcode = "";
 
     for (let i = 0; i < postcode.length; i++) {
@@ -99,10 +101,6 @@ export class CeidgFormComponent {
     this.submitted = false;
     this.loading = false;
     this.error = false;
-  }
-
-  displayErrorModal(): string {
-    return this.error ? "block" : "none";
   }
 
   // TODO: Remove this when we're done

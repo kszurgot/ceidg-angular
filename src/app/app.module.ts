@@ -12,6 +12,8 @@ import { RegonValidatorDirective } from './shared/regon.directive';
 import { CompaniesListComponent } from './components/companies-list/companies-list.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
+import { AddressPipe } from './shared/address.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import { ErrorModalComponent } from './components/error-modal/error-modal.compon
     CompaniesListComponent,
     LoadingComponent,
     ErrorModalComponent,
+    AddressPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

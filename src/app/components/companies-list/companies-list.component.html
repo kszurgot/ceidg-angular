@@ -1,30 +1,20 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>   
+        <th scope="col">Nazwa firmy</th>
+        <th scope="col" class="d-none d-lg-table-cell">Przedsiębiorca</th>
+        <th scope="col">Status</th>
+        <th scope="col" class="d-none d-lg-table-cell">Adres</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of companies">
+        <td>{{ company.companyName }}</td>
+        <td class="d-none d-lg-table-cell">{{ company.businessOwnerFirstName }} {{ company.businessOwnerLastName }}</td>
+        <td>{{ company.status == 'WYLACZNIE_W_FORMIE_SPOLKI' ? 'WYŁĄCZNIE W FORMIE SPÓŁKI' : company.status }}</td>
+        <td class="d-none d-lg-table-cell">{{ company | address }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
