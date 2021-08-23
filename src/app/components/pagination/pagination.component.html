@@ -1,0 +1,7 @@
+<div class="d-flex">
+  <div class="p-2" *ngFor="let item of sortedPaginationItems">
+    <button (click)="changePage(item.link)" class="btn btn-dark mb-4 h5" [disabled]="item.disabled">
+      {{ item.pageNumber }}
+    </button>
+  </div>
+</div>

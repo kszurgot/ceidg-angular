@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CompaniesQuery } from '../../models/companiesQuery';
 import Utils from '../../utils'
 import { HttpService } from 'src/app/services/http.service';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { StateService } from 'src/app/services/state.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './ceidg-form.component.html',
   styleUrls: ['./ceidg-form.component.sass']
 })
-export class CeidgFormComponent {
+export class CeidgFormComponent implements OnInit {
 
   response: Object;
   model: CompaniesQuery = {}; // New
@@ -19,25 +20,38 @@ export class CeidgFormComponent {
   error: boolean = false;
   faSearch = faSearch;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef,private httpService: HttpService) {}
+  constructor(private changeDetectorRef: ChangeDetectorRef, private httpService: HttpService, private stateService: StateService) {}
+
+  ngOnInit(): void {
+    this.stateService.getLoadingState().subscribe((loadingState) => {
+      this.loading = loadingState
+    });
+    this.stateService.getErrorState().subscribe((errorState) => {
+      this.error = errorState
+    });
+
+  }
 
   onSubmit(): void {
     Utils.removeEmptyProperties(this.model);
 
-    this.loading = true;
     this.submitted = true;
+    this.stateService.setLoadingState(true);
 
-    this.httpService.getCompanies(this.model).subscribe(
-      data => {
-        this.response = data;
-      },
-      err => {
-        this.error = true;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+    this.httpService.getCompanies(this.model)
+      .subscribe(
+        data => {
+          this.response = data;
+        },
+        err => {
+          this.stateService.setErrorState(true);
+        },
+        () => {
+          this.stateService.setFormSubmitState(true);
+        }
+      ).add(() => {
+        this.stateService.setLoadingState(false);
+      });
   }
 
   // TODO: Remove this when we're done
@@ -99,8 +113,6 @@ export class CeidgFormComponent {
 
   reset(): void {
     this.submitted = false;
-    this.loading = false;
-    this.error = false;
   }
 
   // TODO: Remove this when we're done

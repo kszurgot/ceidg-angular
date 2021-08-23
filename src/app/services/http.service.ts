@@ -15,7 +15,11 @@ export class HttpService {
   getCompanies(model: CompaniesQuery): Observable<any> {
     let queryString = QueryString.stringify(model);
     queryString = queryString ? "?" + queryString : "";
-    console.log(queryString);
+    return this.http.get(`${environment.apiUrl}/companies${queryString}`);
+  }
+
+  getCompaniesByUrl(url: string): Observable<any> {
+    let queryString = new URL(url).search;
     return this.http.get(`${environment.apiUrl}/companies${queryString}`);
   }
 }

@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
         && response.error.code === 401
         && response.error.message == "Expired JWT Token"
       ) {
-        console.log(response, 'teqweq');
         return this.handle401Error(request, next);
       } else {
         return throwError(response);

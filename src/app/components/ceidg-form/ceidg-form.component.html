@@ -2,9 +2,9 @@
 
   <app-loading *ngIf="loading"></app-loading>
 
-  <app-error-modal [error]="error" (closeModal)="reset()"></app-error-modal>
+  <app-error-modal (closeModal)="reset()"></app-error-modal>
 
-  <app-companies-list *ngIf="!loading && submitted" [response]="response" (resetForm)="reset()"></app-companies-list>
+  <app-companies-list [hidden]="error || loading || !submitted" [response]="response" (resetForm)="reset()"></app-companies-list>
 
   <form *ngIf="!submitted" #companiesForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-row">
@@ -234,7 +234,7 @@
         >
       </div>
     </div>
-    <button type="submit" [disabled]="!companiesForm.form.valid" class="btn btn-primary">
+    <button type="submit" [disabled]="!companiesForm.form.valid" class="btn btn-dark">
       Szukaj<fa-icon class="ml-1" [icon]="faSearch"></fa-icon>
     </button>
   </form>

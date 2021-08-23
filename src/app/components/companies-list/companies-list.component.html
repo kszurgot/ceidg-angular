@@ -1,3 +1,11 @@
+<div class="d-flex">
+  <div class="mr-auto p-2">
+    <button (click)="backToForm()" class="btn btn-dark mb-4 h5">
+      <fa-icon class="mr-1" [icon]="faArrowLeft"></fa-icon>Wróć
+    </button>
+  </div>
+  <app-pagination *ngIf="pagination" [pagination]="pagination" (updateCompaniesList)="changePage($event)"></app-pagination>
+</div>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -12,7 +20,14 @@
       <tr *ngFor="let company of companies">
         <td>{{ company.companyName }}</td>
         <td class="d-none d-lg-table-cell">{{ company.businessOwnerFirstName }} {{ company.businessOwnerLastName }}</td>
-        <td>{{ company.status == 'WYLACZNIE_W_FORMIE_SPOLKI' ? 'WYŁĄCZNIE W FORMIE SPÓŁKI' : company.status }}</td>
+        <td>
+          {{ company.status == 'WYLACZNIE_W_FORMIE_SPOLKI'
+                ? 'WYŁĄCZNIE W FORMIE SPÓŁKI'
+                : company.status == 'OCZEKUJE_NA_ROZPOCZECIE_DZIALANOSCI'
+                  ? 'OCZEKUJE NA ROZPOCZĘCIE DZIAŁALNOŚCI'
+                  : company.status
+          }}
+        </td>
         <td class="d-none d-lg-table-cell">{{ company | address }}</td>
       </tr>
     </tbody>

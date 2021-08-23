@@ -14,6 +14,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { AddressPipe } from './shared/address.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LoadingComponent,
     ErrorModalComponent,
     AddressPipe,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

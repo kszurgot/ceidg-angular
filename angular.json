@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "query-string"
+            ],
             "outputPath": "dist/frontend-ceidg",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -123,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "frontend-ceidg"
+    }
+  },
+  "defaultProject": "frontend-ceidg",
+  "cli": {
+    "analytics": "dc30b5e7-e62b-446b-99fc-0525540f64f7"
+  }
 }

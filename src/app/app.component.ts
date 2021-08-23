@@ -7,11 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
+
   isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  username: string;
-  content: string;
 
   constructor(private authService: AuthService) { }
 
