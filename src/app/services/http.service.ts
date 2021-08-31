@@ -22,4 +22,8 @@ export class HttpService {
     let queryString = new URL(url).search;
     return this.http.get(`${environment.apiUrl}/companies${queryString}`);
   }
+
+  getCompany(id: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/companies/${id}`);
+  }
 }

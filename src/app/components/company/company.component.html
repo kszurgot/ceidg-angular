@@ -1,0 +1,102 @@
+<button (click)="showModal()" class="btn btn-dark mb-4 h5">
+  <fa-icon class="mr-1" [icon]="faEye"></fa-icon>
+</button>
+
+<div [ngStyle]="{display: displayModal()}" class="modal" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog-centered modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ simpleCompany.companyName }}</h5>
+            <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table">
+                  <tr *ngIf="simpleCompany.nip">
+                    <th>NIP</th>
+                    <td>{{ simpleCompany.nip }}</td>
+                  </tr>
+                  <tr *ngIf="simpleCompany.regon">
+                    <th>REGON</th>
+                    <td>{{ simpleCompany.regon }}</td>
+                  </tr>
+                  <tr>
+                    <th>Przedsiębiorca</th>
+                    <td>{{ simpleCompany.businessOwnerFirstName }} {{ simpleCompany.businessOwnerLastName }}</td>
+                  </tr>
+                  <tr>
+                    <th>Status</th>
+                    <td>
+                      {{ simpleCompany.status == 'WYLACZNIE_W_FORMIE_SPOLKI'
+                          ? 'WYŁĄCZNIE W FORMIE SPÓŁKI'
+                          : simpleCompany.status == 'OCZEKUJE_NA_ROZPOCZECIE_DZIALANOSCI'
+                            ? 'OCZEKUJE NA ROZPOCZĘCIE DZIAŁALNOŚCI'
+                            : simpleCompany.status
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Adres</th>
+                    <td>{{ simpleCompany | address }}</td>
+                  </tr>
+                  <tr *ngIf="simpleCompany.businessStartDate">
+                    <th>Data rozpoczęcia działaności</th>
+                    <td>{{ simpleCompany.businessStartDate | date:'dd-MM-yyyy' }}</td>
+                  </tr>
+                  <ng-container *ngIf="model">
+                    <tr *ngIf="model.email">
+                      <th>Email</th>
+                      <td>{{ model.email }}</td>
+                    </tr>
+                    <tr *ngIf="model.phone">
+                      <th>Telefon</th>
+                      <td>{{ model.phone }}</td>
+                    </tr>
+                    <tr *ngIf="model.www">
+                      <th>Strona</th>
+                      <td>{{ model.www }}</td>
+                    </tr>
+                    <tr *ngIf="model.mainPKDCode">
+                      <th>Głowny kod PDK</th>
+                      <td>{{ model.mainPKDCode | PKDCode }}</td>
+                    </tr>
+                    <tr *ngIf="model.PKDCode.length">
+                      <th>Pozostałe kody PKD</th>
+                      <td>{{ model.PKDCode | PKDCode }}</td>
+                    </tr>
+                    <tr *ngIf="model.citizenships && model.citizenships.length">
+                      <th>Obywatelstwa</th>
+                      <td>
+                        <ng-container *ngFor="let citizenship of model.citizenships; let isLast=last">
+                          {{ citizenship.country }}{{isLast ? '' : ', '}}
+                        </ng-container>
+                      </td>
+                    </tr>
+                    <tr *ngIf="model.correspondenceAddress">
+                      <th>Adres korespondencyjny</th>
+                      <td>{{ model.correspondenceAddress | address }}</td>
+                    </tr>
+                    <ng-container *ngIf="model.additionalAddresses && model.additionalAddresses.length">
+                      <tr>
+                        <th>Pozostałe adresy</th>
+                      </tr>
+                      <tr *ngFor="let additionalAddress of model.additionalAddresses">
+                        <td colspan="2">{{ additionalAddress | address }}</td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </table>
+              </div>
+              <app-loading *ngIf="loading" [centered]="0" [height]="'4rem'" [width]="'4rem'"></app-loading>
+              <div class="text-center" *ngIf="error">
+                <p class="text-danger">
+                  Nie udało się pobrać dodatkowych danych.<br>
+                  Spróbuj ponownie później.
+                </p>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>

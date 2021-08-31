@@ -1,6 +1,5 @@
 export interface PaginationItem {
-    pageNumber: number,
-    link: string,
-    disabled: boolean,
+  pageNumber: number,
+  link: string,
+  disabled: boolean,
 }
-  

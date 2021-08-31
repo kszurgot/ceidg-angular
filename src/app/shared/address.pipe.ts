@@ -1,27 +1,27 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SimpleCompany } from '../models/simpleCompany';
+import { Address } from '../models/address';
 
 @Pipe({
   name: 'address'
 })
 export class AddressPipe implements PipeTransform {
 
-  transform(company: SimpleCompany): string {
+  transform(data: Address): string {
       let address = "";
 
-      if (company.street == null) {
-        address += company.postcode || company.city ? "" : "-";
-        address += company.postcode || "";
-        address += company.city ? " " + company.city : "";
-        address += company.houseNumber ? " " + company.houseNumber : "";
+      if (data.street == null) {
+        address += data.postcode || data.city ? "" : "-";
+        address += data.postcode || "";
+        address += data.city ? " " + data.city : "";
+        address += data.houseNumber ? " " + data.houseNumber : "";
         
         return address;
       }
       
-      address += company.street + " " + company.houseNumber;
-      address += company.apartmentNumber ? " lok." + company.apartmentNumber : "";
-      address += company.postcode || company.city ? ", " : "-";
-      address += company.postcode + " " + company.city;
+      address += data.street + " " + data.houseNumber;
+      address += data.apartmentNumber ? " lok. " + data.apartmentNumber : "";
+      address += data.postcode || data.city ? ", " : "-";
+      address += data.postcode + " " + data.city;
       return address;
   }
 
