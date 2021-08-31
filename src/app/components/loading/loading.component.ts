@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.sass']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent {
 
-  constructor() { }
+  @Input()
+  centered: boolean = true;
 
-  ngOnInit(): void {
-  }
+  @Input()
+  width: string = "6rem";
 
+  @Input()
+  height: string = "6rem";
 }
