@@ -10,7 +10,6 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
 
   form: any = {};
-  isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
@@ -21,9 +20,7 @@ export class LoginComponent {
     this.authService.login(this.form).subscribe(
       data => {
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
         this.router.navigate(["/"]);
-        this.reloadPage();
       },
       err => {
         this.isLoginFailed = true;
@@ -35,9 +32,5 @@ export class LoginComponent {
 
       }
     );
-  }
-
-  reloadPage(): void {
-    window.location.replace('/');
   }
 }

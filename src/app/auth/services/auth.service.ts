@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of, Observable, throwError } from 'rxjs';
+import { of, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Tokens } from '../models/tokens';
@@ -12,9 +12,12 @@ export class AuthService {
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private loggedUser: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loggedIn.next(!!this.getJwtToken());
+  }
 
   login(user: { username: string, password: string }): Observable<boolean> {
     return this.http.post<any>(`${environment.apiUrl}/login`, user)
@@ -36,8 +39,8 @@ export class AuthService {
     }));
   }
 
-  isLoggedIn() {
-    return !!this.getJwtToken();
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
   getJwtToken() {
@@ -50,11 +53,13 @@ export class AuthService {
 
   private doLoginUser(username: string, tokens: Tokens) {
     this.loggedUser = username;
+    this.loggedIn.next(true);
     this.storeTokens(tokens);
   }
 
   private doLogoutUser() {
     this.loggedUser = null;
+    this.loggedIn.next(false);
     this.removeTokens();
   }
 
