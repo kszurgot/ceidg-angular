@@ -54,11 +54,6 @@ export class CeidgFormComponent implements OnInit {
       });
   }
 
-  // TODO: Remove this when we're done
-  // log(value: any) {
-  //   console.log(value);
-  // }
-
   nip(nip: string): void {
     this.changeDetectorRef.detectChanges();
 
@@ -114,7 +109,4 @@ export class CeidgFormComponent implements OnInit {
   reset(): void {
     this.submitted = false;
   }
-
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
 }
