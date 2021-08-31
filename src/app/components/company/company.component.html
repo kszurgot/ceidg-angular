@@ -62,7 +62,7 @@
                       <th>Głowny kod PDK</th>
                       <td>{{ model.mainPKDCode | PKDCode }}</td>
                     </tr>
-                    <tr *ngIf="model.PKDCode.length">
+                    <tr *ngIf="model.PKDCode && model.PKDCode.length">
                       <th>Pozostałe kody PKD</th>
                       <td>{{ model.PKDCode | PKDCode }}</td>
                     </tr>
