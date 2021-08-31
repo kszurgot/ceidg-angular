@@ -6,7 +6,7 @@
   </div>
   <app-pagination *ngIf="pagination" [pagination]="pagination" (updateCompaniesList)="changePage($event)"></app-pagination>
 </div>
-<div class="table-responsive">
+<div *ngIf="companies.length; else noContent" class="table-responsive">
   <table class="table">
     <thead>
       <tr>   
@@ -14,6 +14,7 @@
         <th scope="col" class="d-none d-lg-table-cell">Przedsiębiorca</th>
         <th scope="col">Status</th>
         <th scope="col" class="d-none d-lg-table-cell">Adres</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +30,18 @@
           }}
         </td>
         <td class="d-none d-lg-table-cell">{{ company | address }}</td>
+        <td>
+          <app-company [simpleCompany]="company"></app-company>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
+<ng-template #noContent>
+  <div class="card bg-light mb-3">
+    <div class="card-header">Brak wyników</div>
+    <div class="card-body">
+      <p class="card-text">Nie znaleziono wyników spełniających kryteria wyszukiwania</p>
+    </div>
+  </div>
+</ng-template>
